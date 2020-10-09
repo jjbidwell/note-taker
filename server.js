@@ -10,15 +10,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.end('<h1>Home Page</h1>');
+    res.sendFile(path.join(__dirname, "/public/index.html"));
 })
 
 app.get('/notes', (req, res) => {
-    res.end('<h1>Note Page</h1>');
+    res.sendFile(path.join(__dirname, "/public/notes.html"));
 })
 
 app.get('/api/notes', (req, res) => {
-    res.end('<h1>API note Page</h1>');
+    return res.json(notes);
 })
 
 
