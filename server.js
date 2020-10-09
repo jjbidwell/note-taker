@@ -45,8 +45,18 @@ app.post("/api/notes", (req, res) => {
 
   });
 
-  app.delete('/api/notes', (req, res) => {
-    res.send(res);
+  app.delete('/api/notes/:id', (req, res) => {
+    const clicked = req.params.id;
+
+    for (let i = 0; i < notes.length; i++) {
+        if (clicked === notes[i].id) {
+          notes.splice(i, 1);
+          console.log(notes);
+
+        }
+      }
+    //console.log(req.params.id);
+
   });
 
 app.listen(PORT, () => {

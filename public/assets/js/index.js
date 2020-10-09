@@ -6,7 +6,8 @@ const $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
-let count = 1;
+let count = 0;
+$saveNoteBtn.hide();
 // A function for getting all notes from the db
 const getNotes = () => {
   return $.ajax({
@@ -70,7 +71,7 @@ const handleNoteSave = function () {
 const handleNoteDelete = function (event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
-
+  console.log(event)
   const note = $(this).parent(".list-group-item").data();
 
   if (activeNote.id === note.id) {
@@ -114,7 +115,7 @@ const renderNoteList = (notes) => {
   // Returns jquery object for li with given text and delete button
   // unless withDeleteButton argument is provided as false
   const create$li = (text, withDeleteButton = true) => {
-    const $li = $("<li class='list-group-item'>");
+    const $li = $(`<li class='list-group-item'>`);
     const $span = $("<span>").text(text);
     $li.append($span);
 
