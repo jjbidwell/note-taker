@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 4400;
 
-let notes = [{}];
+const notes = [];
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -22,6 +22,19 @@ app.get('/api/notes', (req, res) => {
     return res.json(notes);
 })
 
+app.get('/api/notes/:id', (req, res) => {
+    const chosen = req.params.id;
+    console.log(chosen);
+  
+    for (let i = 0; i < notes.length; i++) {
+      if (chosen === notes[i].id) {
+        return res.json(notes[i]);
+      }
+    }
+  
+    return res.json(false);
+});
+
 
 app.post("/api/notes", (req, res) => {
     const newNote = req.body;
@@ -30,6 +43,10 @@ app.post("/api/notes", (req, res) => {
     notes.push(newNote);
     res.json(notes);
 
+  });
+
+  app.delete('/api/notes', (req, res) => {
+    res.send(res);
   });
 
 app.listen(PORT, () => {

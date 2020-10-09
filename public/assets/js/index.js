@@ -1,12 +1,12 @@
 const $noteTitle = $(".note-title");
 const $noteText = $(".note-textarea");
-const $saveNoteBtn = $(".save-note");
+const $saveNoteBtn = $("#save");
 const $newNoteBtn = $(".new-note");
 const $noteList = $(".list-container .list-group");
-console.log('js connected');
+
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
-
+let count = 1;
 // A function for getting all notes from the db
 const getNotes = () => {
   return $.ajax({
@@ -51,7 +51,10 @@ const renderActiveNote = () => {
 
 // Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function () {
+  console.log('button clicked');
   const newNote = {
+    id: count,
+    date: moment().format('MMMM Do YYYY, h:mm:ss a'),
     title: $noteTitle.val(),
     text: $noteText.val(),
   };
@@ -60,6 +63,7 @@ const handleNoteSave = function () {
     getAndRenderNotes();
     renderActiveNote();
   });
+  count++;
 };
 
 // Delete the clicked note
