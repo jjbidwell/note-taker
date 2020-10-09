@@ -16,6 +16,7 @@ const getNotes = () => {
   });
 };
 
+
 // A function for saving a note to the db
 const saveNote = (note) => {
   return $.ajax({
@@ -52,12 +53,11 @@ const renderActiveNote = () => {
 
 // Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function () {
-  console.log('button clicked');
   const newNote = {
-    id: count,
     date: moment().format('MMMM Do YYYY, h:mm:ss a'),
     title: $noteTitle.val(),
     text: $noteText.val(),
+    id: $noteTitle.val().replace(/\s+/g, "").trim().toLowerCase()
   };
 
   saveNote(newNote).then(() => {
@@ -71,7 +71,7 @@ const handleNoteSave = function () {
 const handleNoteDelete = function (event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
-  console.log(event)
+
   const note = $(this).parent(".list-group-item").data();
 
   if (activeNote.id === note.id) {

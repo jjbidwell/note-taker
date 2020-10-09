@@ -4,21 +4,26 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 4400;
+let notes;
 
-const notes = [];
+fs.readFile(path.join(__dirname, "/public/db/notes.json"), (err, data) => {
+    notes = JSON.parse(data);
+});
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
-})
+});
 
 app.get('/api/notes', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/db/notes.json"));
-})
+});
 
 app.get('/api/notes/:id', (req, res) => {
     const chosen = req.params.id;
@@ -52,9 +57,13 @@ app.post("/api/notes", (req, res) => {
 
     notes.forEach(note => {
         if (clicked === note.id) {
-            let index = notes.indexOf(note)
+            console.log(clicked + ' deleted');
+            let index = notes.indexOf(note);
             notes.splice(index, 1);
-            res.json(notes);
+            fs.writeFile(path.join(__dirname, "/public/db/notes.json") , JSON.stringify(notes, null, 5), (err) => {
+                if (err) throw err;
+            })
+            res.sendFile(path.join(__dirname, "/public/notes.html"));
 
         };
     });
