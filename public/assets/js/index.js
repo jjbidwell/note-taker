@@ -1,7 +1,7 @@
 const $noteTitle = $(".note-title");
 const $noteText = $(".note-textarea");
 const $saveNoteBtn = $("#save");
-const $newNoteBtn = $(".new-note");
+const $newNoteBtn = $("#new");
 const $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
@@ -94,6 +94,7 @@ const handleNoteView = function () {
 const handleNewNoteView = function () {
   activeNote = {};
   renderActiveNote();
+  console.log('pencil clicked');
 };
 
 // If a note's title or text are empty, hide the save button
