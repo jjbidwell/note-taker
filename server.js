@@ -48,15 +48,14 @@ app.post("/api/notes", (req, res) => {
   app.delete('/api/notes/:id', (req, res) => {
     const clicked = req.params.id;
 
-    for (let i = 0; i < notes.length; i++) {
-        if (clicked === notes[i].id) {
-          notes.splice(i, 1);
-          console.log(notes);
+    notes.forEach(note => {
+        if (clicked === note.id) {
+            let index = notes.indexOf(note)
+            notes.splice(index, 1);
+            res.json(notes);
 
-        }
-      }
-    //console.log(req.params.id);
-
+        };
+    });
   });
 
 app.listen(PORT, () => {
