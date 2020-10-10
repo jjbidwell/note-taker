@@ -48,7 +48,7 @@ app.post("/api/notes", (req, res) => {
     fs.writeFile(path.join(__dirname, "/public/db/notes.json") , JSON.stringify(notes, null, 5), (err) => {
         if (err) throw err;
     })
-    res.json(notes);
+    res.sendFile(path.join(__dirname, "/public/notes.html"));
 
   });
 
@@ -57,7 +57,6 @@ app.post("/api/notes", (req, res) => {
 
     notes.forEach(note => {
         if (clicked === note.id) {
-            console.log(clicked + ' deleted');
             let index = notes.indexOf(note);
             notes.splice(index, 1);
             fs.writeFile(path.join(__dirname, "/public/db/notes.json") , JSON.stringify(notes, null, 5), (err) => {
